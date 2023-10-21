@@ -1,5 +1,5 @@
 {
-  "name": "react-qr-reader",
+  "name": "@kazticket/react-qr-reader",
   "version": "3.0.0-beta-1",
   "description": "A React Component for reading QR codes from the webcam",
   "scripts": {
