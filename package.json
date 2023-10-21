@@ -15,7 +15,7 @@
   "types": "dist/index.d.ts",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/react-qr-reader/react-qr-reader.git"
+    "url": "git+https://github.com/zhanshugurov/react-qr-reader.git"
   },
   "keywords": [
     "react",
@@ -26,9 +26,9 @@
   "author": "thomas billiet",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/react-qr-reader/react-qr-reader/issues"
+    "url": "https://github.com/zhanshugurov/react-qr-reader/issues"
   },
-  "homepage": "https://github.com/react-qr-reader/react-qr-reader#readme",
+  "homepage": "https://github.com/zhanshugurov/react-qr-reader#readme",
   "peerDependencies": {
     "react": "^18.2.0 || ^17.0.0",
     "react-dom": "^18.2.0 || ^17.0.0"
