@@ -1,6 +1,6 @@
 {
   "name": "@kazticket/react-qr-reader",
-  "version": "3.0.9",
+  "version": "3.0.10",
   "description": "A React Component for reading QR codes from the webcam",
   "scripts": {
     "analyze": "source-map-explorer pkg/**/*.js pkg/**/*.js.map",
@@ -36,9 +36,7 @@
     "react-dom": "^18.2.0 || ^17.0.0"
   },
   "dependencies": {
-    "@zxing/browser": "^0.1.4",
-    "@zxing/library": "^0.20.0",
-    "rollup": "^2.67.2"
+    "@koale/useworker": "^4.0.2"
   },
   "devDependencies": {
     "@babel/core": "^7.11.4",
@@ -87,13 +85,6 @@
     "source-map-explorer": "^2.5.0",
     "ts-loader": "^8.0.3",
     "typescript": "^4.0.2"
-  },
-  "peerDependencies": {
-    "react": "^18.2.0 || ^17.0.0",
-    "react-dom": "^18.2.0 || ^17.0.0"
-  },
-  "dependencies": {
-    "@koale/useworker": "^4.0.2"
   },
   "@pika/pack": {
     "pipeline": [
