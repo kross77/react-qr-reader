@@ -1,6 +1,6 @@
 {
   "name": "@kazticket/react-qr-reader",
-  "version": "3.0.11",
+  "version": "3.0.12",
   "description": "A react component for reading QR codes from the webcam.",
   "scripts": {
     "start": "concurrently --kill-others \"npm run build:watch\" \"npm run storybook\"",
