@@ -27,11 +27,13 @@ export const QrReader: React.FC<QrReaderProps> = ({
 
   return (
     <section className={className} style={containerStyle}>
-      <section style={styles.container as any}>
+      <section style={styles.container}>
         <div
           style={{
-            ...styles.container,
-            ...videoContainerStyle,
+            height: '100%',
+            width: '100%',
+            overflow: 'hidden',
+            position: 'static',
           }}
         >
           {showViewFinder && (
