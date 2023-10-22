@@ -1,88 +1,53 @@
-/// <reference types="react" />
-import { BrowserQRCodeReader } from '@zxing/browser';
-import { Result } from '@zxing/library';
+import React from 'react';
+
+type OnScanFunction = (decoded: any) => void;
+type OnLoadFunction = (stream: MediaStream) => void;
+type OnErrorFunction = (err: Error) => void;
+type DebugDataTypes = 'raw_data' | 'load' | 'value' | 'error';
+type DebugFunction = (data: any, type: DebugDataTypes) => void;
 
 type QrReaderProps = {
     /**
-     * Media track constraints object, to specify which camera and capabilities to use
+     * The camera to use, especify 'user' for front camera or 'environment' for back camera.
      */
-    constraints?: MediaTrackConstraints;
+    facingMode: VideoFacingModeEnum;
     /**
-     * Called when an error occurs.
+     * The resolution of the video (or image in legacyMode). Larger resolution will increase the accuracy but it will also slow down the processing time.
      */
-    onResult?: OnResultFunction;
+    resolution: number;
     /**
-     * Property that represents the view finder component
-     */
-    ViewFinder?: (props: any) => React.ReactElement<any, any> | null;
-    /**
-     * Property that represents the scan period
-     */
-    scanDelay?: number;
-    /**
-     * Property that represents the ID of the video element
-     */
-    videoId?: string;
-    /**
-     * Property that represents an optional className to modify styles
+     * ClassName for the container element.
      */
     className?: string;
     /**
-     * Property that represents a style for the container
+     * Use custom camera constraints that the override default behavior.
      */
-    containerStyle?: any;
+    constraints?: MediaTrackConstraintSet;
     /**
-     * Property that represents a style for the video container
+     * Called when an error occurs.
      */
-    videoContainerStyle?: any;
+    onError?: OnErrorFunction;
     /**
-     * Property that represents a style for the video
+     * Scan event handler. Called every scan with the decoded value or null if no QR code was found.
      */
-    videoStyle?: any;
+    onScan?: OnScanFunction;
     /**
-     * Show or hide the build in view finder.
+     * Called when the component is ready for use.
      */
-    showViewFinder: boolean;
+    onLoad?: OnLoadFunction;
     /**
-     * Color to display in viewFinder
+     * Styling for the container element. Warning The preview will always keep its 1:1 aspect ratio.
      */
-    viewFinderColor?: string;
+    style?: any;
     /**
-     * Width for view finder line borders
+     * Function that takes a context and gives you the choice to log
      */
-    viewFinderStrokeWidth?: string;
+    debug?: DebugFunction;
+    /**
+     * Property that represents the view finder component
+     */
+    ViewFinder: (props: any) => React.ReactElement<any, any> | null;
 };
-type OnResultFunction = (
-/**
- * The QR values extracted by Zxing
- */
-result?: Result | undefined | null, 
-/**
- * The name of the exceptions thrown while reading the QR
- */
-error?: Error | undefined | null, 
-/**
- * The instance of the QR browser reader
- */
-codeReader?: BrowserQRCodeReader) => void;
-type UseQrReaderHookProps = {
-    /**
-     * Media constraints object, to specify which camera and capabilities to use
-     */
-    constraints?: MediaTrackConstraints;
-    /**
-     * Callback for retrieving the result
-     */
-    onResult?: OnResultFunction;
-    /**
-     * Property that represents the scan period
-     */
-    scanDelay?: number;
-    /**
-     * Property that represents the ID of the video element
-     */
-    videoId?: string;
-};
-type UseQrReaderHook = (props: UseQrReaderHookProps) => void;
+declare const QrReader: React.FunctionComponent<QrReaderProps>;
 
-export { OnResultFunction, QrReaderProps, UseQrReaderHook, UseQrReaderHookProps };
+export { QrReader, QrReaderProps };
