@@ -10,11 +10,13 @@ export const QrReader: React.FC<QrReaderProps> = ({
   containerStyle,
   videoStyle,
   constraints,
-  ViewFinder,
+  showViewFinder,
   scanDelay,
   className,
   onResult,
   videoId,
+  viewFinderColor,
+  viewFinderStrokeWidth,
 }) => {
   useQrReader({
     constraints,
@@ -25,23 +27,56 @@ export const QrReader: React.FC<QrReaderProps> = ({
 
   return (
     <section className={className} style={containerStyle}>
-      <div
-        style={{
-          ...styles.container,
-          ...videoContainerStyle,
-        }}
-      >
-        {!!ViewFinder && <ViewFinder />}
-        <video
-          muted
-          id={videoId}
+      <section style={styles.container as any}>
+        <div
           style={{
-            ...styles.video,
-            ...videoStyle,
-            transform: constraints?.facingMode === 'user' && 'scaleX(-1)',
+            ...styles.container,
+            ...videoContainerStyle,
           }}
-        />
-      </div>
+        >
+          {showViewFinder && (
+            <svg
+              width="50px"
+              viewBox="0 0 100 100"
+              style={styles.viewFinder as any}
+            >
+              <path
+                fill="none"
+                d="M13,0 L0,0 L0,13"
+                stroke={viewFinderColor}
+                strokeWidth={viewFinderStrokeWidth}
+              />
+              <path
+                fill="none"
+                d="M0,87 L0,100 L13,100"
+                stroke={viewFinderColor}
+                strokeWidth={viewFinderStrokeWidth}
+              />
+              <path
+                fill="none"
+                d="M87,100 L100,100 L100,87"
+                stroke={viewFinderColor}
+                strokeWidth={viewFinderStrokeWidth}
+              />
+              <path
+                fill="none"
+                d="M100,13 L100,0 87,0"
+                stroke={viewFinderColor}
+                strokeWidth={viewFinderStrokeWidth}
+              />
+            </svg>
+          )}
+          <video
+            muted
+            id={videoId}
+            style={{
+              ...styles.video,
+              ...videoStyle,
+              transform: constraints?.facingMode === 'user' && 'scaleX(-1)',
+            }}
+          />
+        </div>
+      </section>
     </section>
   );
 };

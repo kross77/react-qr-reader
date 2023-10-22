@@ -38,6 +38,19 @@ export type QrReaderProps = {
    * Property that represents a style for the video
    */
   videoStyle?: any;
+  /**
+   * Show or hide the build in view finder.
+   */
+  showViewFinder: boolean;
+  /**
+   * Color to display in viewFinder
+   */
+  viewFinderColor?: string;
+
+  /**
+   * Width for view finder line borders
+   */
+  viewFinderStrokeWidth?: string;
 };
 
 export type OnResultFunction = (
