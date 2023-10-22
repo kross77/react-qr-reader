@@ -1,83 +1,97 @@
-import * as React from 'react';
+import styles from './styles';
 
-import { styles } from './styles';
-import { useQrReader } from './hooks';
+import React, { useRef } from 'react';
 
-import { QrReaderProps } from '../types';
+import {
+  useQrReader,
+  OnErrorFunction,
+  OnScanFunction,
+  OnLoadFunction,
+  DebugFunction,
+} from './hooks/useQrReader';
 
-export const QrReader: React.FC<QrReaderProps> = ({
-  videoContainerStyle,
-  containerStyle,
-  videoStyle,
+export type QrReaderProps = {
+  /**
+   * The camera to use, especify 'user' for front camera or 'environment' for back camera.
+   */
+  facingMode: VideoFacingModeEnum;
+  /**
+   * The resolution of the video (or image in legacyMode). Larger resolution will increase the accuracy but it will also slow down the processing time.
+   */
+  resolution: number;
+  /**
+   * ClassName for the container element.
+   */
+  className?: string;
+  /**
+   * Use custom camera constraints that the override default behavior.
+   */
+  constraints?: MediaTrackConstraintSet;
+  /**
+   * Called when an error occurs.
+   */
+  onError?: OnErrorFunction;
+  /**
+   * Scan event handler. Called every scan with the decoded value or null if no QR code was found.
+   */
+  onScan?: OnScanFunction;
+  /**
+   * Called when the component is ready for use.
+   */
+  onLoad?: OnLoadFunction;
+  /**
+   * Styling for the container element. Warning The preview will always keep its 1:1 aspect ratio.
+   */
+  style?: any;
+  /**
+   * Function that takes a context and gives you the choice to log
+   */
+  debug?: DebugFunction;
+  /**
+   * Property that represents the view finder component
+   */
+  ViewFinder: (props: any) => React.ReactElement<any, any> | null;
+};
+
+export const QrReader: React.FunctionComponent<QrReaderProps> = ({
   constraints,
-  showViewFinder,
-  scanDelay,
+  facingMode,
+  resolution,
+  ViewFinder,
   className,
-  onResult,
-  videoId,
-  viewFinderColor,
-  viewFinderStrokeWidth,
-}) => {
+  onError,
+  onScan,
+  onLoad,
+  style,
+  debug,
+}: QrReaderProps) => {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
+
   useQrReader({
+    callbacks: [onLoad, onScan, onError],
+    refs: [canvasRef, videoRef],
     constraints,
-    scanDelay,
-    onResult,
-    videoId,
+    facingMode,
+    resolution,
+    debug,
   });
 
   return (
-    <section className={className} style={containerStyle}>
-      <section style={styles.container}>
-        <div
-          style={{
-            height: '100%',
-            width: '100%',
-            overflow: 'hidden',
-            position: 'static',
-          }}
-        >
-          {showViewFinder && (
-            <svg
-              width="50px"
-              viewBox="0 0 100 100"
-              style={styles.viewFinder as any}
-            >
-              <path
-                fill="none"
-                d="M13,0 L0,0 L0,13"
-                stroke={viewFinderColor}
-                strokeWidth={viewFinderStrokeWidth}
-              />
-              <path
-                fill="none"
-                d="M0,87 L0,100 L13,100"
-                stroke={viewFinderColor}
-                strokeWidth={viewFinderStrokeWidth}
-              />
-              <path
-                fill="none"
-                d="M87,100 L100,100 L100,87"
-                stroke={viewFinderColor}
-                strokeWidth={viewFinderStrokeWidth}
-              />
-              <path
-                fill="none"
-                d="M100,13 L100,0 87,0"
-                stroke={viewFinderColor}
-                strokeWidth={viewFinderStrokeWidth}
-              />
-            </svg>
-          )}
-          <video
-            muted
-            id={videoId}
-            style={{
-              ...styles.video,
-              ...videoStyle,
-              transform: constraints?.facingMode === 'user' && 'scaleX(-1)',
-            }}
-          />
-        </div>
+    <section className={className} style={style}>
+      <section style={styles.container as any}>
+        {!!ViewFinder && <ViewFinder />}
+        <video
+          muted
+          ref={videoRef}
+          style={
+            {
+              ...styles.videoPreview,
+              transform: facingMode === 'user' && 'scaleX(-1)',
+            } as any
+          }
+        />
+        <canvas ref={canvasRef} style={styles.hidden} />
       </section>
     </section>
   );
@@ -85,9 +99,9 @@ export const QrReader: React.FC<QrReaderProps> = ({
 
 QrReader.displayName = 'QrReader';
 QrReader.defaultProps = {
-  constraints: {
-    facingMode: 'user',
-  },
-  videoId: 'video',
-  scanDelay: 500,
+  resolution: 600,
+  constraints: null,
+  facingMode: 'environment',
 };
+
+export default QrReader;

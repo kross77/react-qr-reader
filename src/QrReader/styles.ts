@@ -1,30 +1,22 @@
-export const styles: any = {
+export default {
   container: {
-    width: '100%',
-    paddingTop: '100%',
     overflow: 'hidden',
     position: 'relative',
+    width: '100%',
+    paddingTop: '100%',
   },
-  video: {
+  hidden: {
+    display: 'none',
+  },
+  videoPreview: {
     top: 0,
     left: 0,
-    width: '100%',
-    height: '100%',
     display: 'block',
+    position: 'absolute',
     overflow: 'hidden',
-    position: 'absolute',
-    transform: undefined,
-    objectFit: 'cover',
-  },
-  viewFinder: {
-    top: 0,
-    left: 0,
-    zIndex: 1,
-    boxSizing: 'border-box',
-    border: '50px solid rgba(0, 0, 0, 0.3)',
-    boxShadow: 'inset 0 0 0 5px rgba(255, 0, 0, 0.5)',
-    position: 'absolute',
     width: '100%',
     height: '100%',
+    objectFit: 'cover',
+    transform: undefined,
   },
 };

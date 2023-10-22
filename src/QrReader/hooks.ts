@@ -3,7 +3,7 @@ import { BrowserQRCodeReader, IScannerControls } from '@zxing/browser';
 
 import { UseQrReaderHook } from '../types';
 
-import { isMediaDevicesSupported, isValidType } from './utils';
+import { isMediaDevicesSupported, isValidType } from './helpers/utils';
 
 // TODO: add support for debug logs
 export const useQrReader: UseQrReaderHook = ({
