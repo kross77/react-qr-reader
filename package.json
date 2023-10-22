@@ -1,6 +1,6 @@
 {
   "name": "@kazticket/react-qr-reader",
-  "version": "3.0.4",
+  "version": "3.0.5",
   "description": "A React Component for reading QR codes from the webcam",
   "scripts": {
     "build": "rollup -c",
